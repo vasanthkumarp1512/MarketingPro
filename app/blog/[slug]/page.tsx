@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { posts } from "../../data/posts";
 
 export default async function BlogPost({
     params,
@@ -7,6 +8,11 @@ export default async function BlogPost({
     params: Promise<{ slug: string }>;
 }) {
     const { slug } = await params;
+
+    // Find post by slug (simulated)
+    const post = posts.find(
+        (p) => p.title.toLowerCase().replace(/ /g, "-").replace(/:/g, "") === slug
+    );
 
     return (
         <div className="bg-white dark:bg-black py-24 sm:py-32">
@@ -22,14 +28,24 @@ export default async function BlogPost({
                 </div>
 
                 <article>
+                    {post?.image && (
+                        <div className="relative w-full h-64 sm:h-80 md:h-96 mb-10 overflow-hidden rounded-2xl">
+                            <img
+                                src={post.image}
+                                alt={post.title}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                    )}
+
                     <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl mb-4 capitalize">
                         {slug.replace(/-/g, " ")}
                     </h1>
 
                     <div className="flex items-center gap-x-4 text-sm mb-8 text-gray-500 dark:text-gray-400">
-                        <time dateTime="2024-03-16">Mar 16, 2024</time>
+                        <time dateTime={post?.date || "2024-03-16"}>{post?.date || "Mar 16, 2024"}</time>
                         <span>•</span>
-                        <span>5 min read</span>
+                        <span>{post?.readTime || "5 min read"}</span>
                     </div>
 
                     <div className="prose prose-lg prose-gray dark:prose-invert max-w-none">

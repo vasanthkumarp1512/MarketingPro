@@ -1,56 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-
-const posts = [
-    {
-        id: 1,
-        title: "The Future of Digital Marketing in 2024",
-        excerpt: "Discover the emerging trends that will shape the marketing landscape in the coming year.",
-        date: "Mar 16, 2024",
-        category: "Trends",
-        readTime: "5 min read",
-    },
-    {
-        id: 2,
-        title: "Mastering SEO: A Comprehensive Guide",
-        excerpt: "Learn the strategies and techniques to improve your search engine rankings and drive organic traffic.",
-        date: "Mar 10, 2024",
-        category: "SEO",
-        readTime: "8 min read",
-    },
-    {
-        id: 3,
-        title: "Building a Strong Brand Identity",
-        excerpt: "How to create a memorable brand that resonates with your target audience and stands out from the competition.",
-        date: "Mar 5, 2024",
-        category: "Branding",
-        readTime: "6 min read",
-    },
-    {
-        id: 4,
-        title: "Social Media Strategies for Growth",
-        excerpt: "Effective ways to leverage social media platforms to grow your audience and engagement.",
-        date: "Feb 28, 2024",
-        category: "Social Media",
-        readTime: "4 min read",
-    },
-    {
-        id: 5,
-        title: "Content Marketing Essentials",
-        excerpt: "Why content is king and how to create valuable content that converts visitors into customers.",
-        date: "Feb 20, 2024",
-        category: "Content",
-        readTime: "7 min read",
-    },
-    {
-        id: 6,
-        title: "Email Marketing ROI Optimization",
-        excerpt: "Tips for maximizing the return on investment from your email marketing campaigns.",
-        date: "Feb 15, 2024",
-        category: "Email",
-        readTime: "5 min read",
-    },
-];
+import { posts } from "../data/posts";
 
 export default function Blog() {
     return (
@@ -65,6 +15,15 @@ export default function Blog() {
                 <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 dark:border-zinc-800 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                     {posts.map((post) => (
                         <article key={post.id} className="flex max-w-xl flex-col items-start justify-between group cursor-pointer">
+                            <div className="relative w-full h-48 mb-6 overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-800">
+                                <Link href={`/blog/${post.title.toLowerCase().replace(/ /g, "-").replace(/:/g, "")}`}>
+                                    <img
+                                        src={post.image}
+                                        alt={post.title}
+                                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                    />
+                                </Link>
+                            </div>
                             <div className="flex items-center gap-x-4 text-xs">
                                 <time dateTime={post.date} className="text-gray-500 dark:text-gray-400">
                                     {post.date}
@@ -76,10 +35,10 @@ export default function Blog() {
                             </div>
                             <div className="group relative">
                                 <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
-                                    <a href="#">
+                                    <Link href={`/blog/${post.title.toLowerCase().replace(/ /g, "-").replace(/:/g, "")}`}>
                                         <span className="absolute inset-0" />
                                         {post.title}
-                                    </a>
+                                    </Link>
                                 </h3>
                                 <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-gray-400">
                                     {post.excerpt}
